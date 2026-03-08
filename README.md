@@ -107,34 +107,6 @@ pip install langchain langchain-community chromadb dashscope pyyaml
 export DASHSCOPE_API_KEY="your-api-key-here"
 ```
 
-### 运行示例
-
-```python
-from agent.react_agent import ReactAgent
-
-# 创建 Agent 实例
-agent = ReactAgent()
-
-# 流式执行查询
-for chunk in agent.execute_stream("给我生成我的使用报告"):
-    print(chunk, end="", flush=True)
-```
-
-## 配置说明
-
-### RAG 配置 (config/rag.yml)
-
-```yaml
-chat_model_name: qwen-turbo        # 聊天模型
-embedding_model_name: text-embedding-v1  # 向量化模型
-```
-
-### Agent 配置 (config/agent.yml)
-
-```yaml
-external_data_path: data/external/records.csv  # 外部数据路径
-```
-
 ## 架构设计
 
 ```
@@ -143,10 +115,10 @@ external_data_path: data/external/records.csv  # 外部数据路径
 ReAct Agent (推理+行动)
     ↓
 工具选择与执行
-    ├── RAG 检索 → ChromaDB → 返回参考资料
-    ├── 天气查询 → 模拟数据 → 返回天气信息
-    ├── 用户信息 → 随机生成 → 返回用户数据
-    └── 外部数据 → CSV 文件 → 返回使用记录
+    ├── RAG 检索
+    ├── 天气查询
+    ├── 用户信息
+    └── 外部数据
     ↓
 中间件处理
     ├── 监控工具调用
